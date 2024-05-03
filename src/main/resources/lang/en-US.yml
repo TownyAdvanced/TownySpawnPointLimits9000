@@ -23,3 +23,6 @@ description: >
 # DarkPurple = &9, LightGreen = &a, LightBlue = &b
 # Rose = &c, LightPurple = &d, Yellow = &e, White = &f
 
+
+spawn_points9000_msg_err_you_cannot_set_this_spawn_point_below: "You cannot set this spawn point below y level %s."
+spawn_points9000_msg_err_you_cannot_set_this_spawn_point_above: "You cannot set this spawn point above y level %s."

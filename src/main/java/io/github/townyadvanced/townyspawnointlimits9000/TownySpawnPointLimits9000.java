@@ -1,4 +1,4 @@
-package io.github.townyadvanced.simpleplugin;
+package io.github.townyadvanced.townyspawnointlimits9000;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,18 +16,19 @@ import com.palmergames.bukkit.towny.object.TranslationLoader;
 import com.palmergames.bukkit.towny.scheduling.TaskScheduler;
 import com.palmergames.bukkit.towny.scheduling.impl.BukkitTaskScheduler;
 import com.palmergames.bukkit.towny.scheduling.impl.FoliaTaskScheduler;
-import io.github.townyadvanced.simpleplugin.settings.Settings;
 
-public class SimplePlugin extends JavaPlugin {
+import io.github.townyadvanced.townyspawnointlimits9000.settings.Settings;
 
-	private static SimplePlugin plugin;
+public class TownySpawnPointLimits9000 extends JavaPlugin {
+
+	private static TownySpawnPointLimits9000 plugin;
 	private final Object scheduler;
-	private static String requiredTownyVersion = "0.99.5.0";
-	boolean hasConfig = false;
-	boolean hasLocale = false;
+	private static String requiredTownyVersion = "0.100.2.7";
+	boolean hasConfig = true;
+	boolean hasLocale = true;
 	boolean hasListeners = true;
 
-	public SimplePlugin() {
+	public TownySpawnPointLimits9000() {
 		plugin = this;
 		this.scheduler = townyVersionCheck() ? isFoliaClassPresent() ? new FoliaTaskScheduler(this) : new BukkitTaskScheduler(this) : null;
 	}
@@ -69,7 +70,7 @@ public class SimplePlugin extends JavaPlugin {
 		try {
 			Plugin plugin = getPlugin(); 
 			Path langFolderPath = Paths.get(plugin.getDataFolder().getPath()).resolve("lang");
-			TranslationLoader loader = new TranslationLoader(langFolderPath, plugin, SimplePlugin.class);
+			TranslationLoader loader = new TranslationLoader(langFolderPath, plugin, TownySpawnPointLimits9000.class);
 			loader.load();
 			TownyAPI.getInstance().addTranslations(plugin, loader.getTranslations());
 		} catch (TownyInitException e) {
@@ -91,7 +92,7 @@ public class SimplePlugin extends JavaPlugin {
 		return this.getDescription().getVersion();
 	}
 
-	public static SimplePlugin getPlugin() {
+	public static TownySpawnPointLimits9000 getPlugin() {
 		return plugin;
 	}
 

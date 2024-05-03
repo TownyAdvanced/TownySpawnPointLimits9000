@@ -1,4 +1,4 @@
-package io.github.townyadvanced.simpleplugin.settings;
+package io.github.townyadvanced.townyspawnointlimits9000.settings;
 
 import java.nio.file.Path;
 
@@ -6,11 +6,11 @@ import com.palmergames.bukkit.config.CommentedConfiguration;
 import com.palmergames.bukkit.towny.exceptions.initialization.TownyInitException;
 import com.palmergames.util.FileMgmt;
 
-import io.github.townyadvanced.simpleplugin.SimplePlugin;
+import io.github.townyadvanced.townyspawnointlimits9000.TownySpawnPointLimits9000;
 
 public class Settings {
 	private static CommentedConfiguration config, newConfig;
-	private static Path configPath = SimplePlugin.getPlugin().getDataFolder().toPath().resolve("config.yml");
+	private static Path configPath = TownySpawnPointLimits9000.getPlugin().getDataFolder().toPath().resolve("config.yml");
 	
 	public static void loadConfig() {
 		if (FileMgmt.checkOrCreateFile(configPath.toString())) {
@@ -20,7 +20,7 @@ public class Settings {
 			if (!config.load())
 				throw new TownyInitException("Failed to load config.yml.", TownyInitException.TownyError.MAIN_CONFIG);
 
-			setDefaults(SimplePlugin.getPlugin().getVersion(), configPath);
+			setDefaults(TownySpawnPointLimits9000.getPlugin().getVersion(), configPath);
 			config.save();
 		}
 	}
@@ -77,7 +77,7 @@ public class Settings {
 
 	private static void sendError(String msg) {
 
-		SimplePlugin.severe("Error could not read " + msg);
+		TownySpawnPointLimits9000.severe("Error could not read " + msg);
 	}
 	
 	public static boolean getBoolean(ConfigNodes node) {
@@ -110,4 +110,16 @@ public class Settings {
 		return config.getString(node.getRoot().toLowerCase(), node.getDefault());
 	}
 
+
+	public static boolean isSpawnYLevelLimitingEnabled() {
+		return getBoolean(ConfigNodes.SPAWNING_Y_LIMITS_ENABLED);
+	}
+
+	public static double getSpawningLowestYLevelAllowed() {
+		return getDouble(ConfigNodes.SPAWNING_Y_LIMITS_LOWEST_Y_ALLOWED);
+	}
+
+	public static double getSpawningHighestYLevelAllowed() {
+		return getDouble(ConfigNodes.SPAWNING_Y_LIMITS_HIGHEST_Y_ALLOWED);
+	}
 }

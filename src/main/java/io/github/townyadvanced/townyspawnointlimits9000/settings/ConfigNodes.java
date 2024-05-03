@@ -1,4 +1,4 @@
-package io.github.townyadvanced.simpleplugin.settings;
+package io.github.townyadvanced.townyspawnointlimits9000.settings;
 
 public enum ConfigNodes {
 	
@@ -7,9 +7,20 @@ public enum ConfigNodes {
 			"version.version",
 			"",
 			"# This is the current version.  Please do not edit."),
-	LANGUAGE("language",
-			"english.yml",
-			"# The language file you wish to use");
+	SPAWNING_ROOT("spawning.y_limits","",""),
+	SPAWNING_Y_LIMITS_ROOT("spawning.y_limits","",""),
+	SPAWNING_Y_LIMITS_ENABLED("spawning.y_limits.enabled",
+			"false",
+			"",
+			"# Should towns, nations be limited in how low they can set a spawn point, or an outpost spawn point?"),
+	SPAWNING_Y_LIMITS_LOWEST_Y_ALLOWED("spawning.y_limits.lowest_y_allowed",
+			"0",
+			"",
+			"# When limiting is configured, what is the lowest y level allowed?"),
+	SPAWNING_Y_LIMITS_HIGHEST_Y_ALLOWED("spawning.y_limits.highest_y_allowed",
+			"100",
+			"",
+			"# When limiting is configured, what is the highest y level allowed?");
 	
 	private final String Root;
 	private final String Default;
