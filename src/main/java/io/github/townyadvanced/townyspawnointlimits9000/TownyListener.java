@@ -81,7 +81,7 @@ public class TownyListener implements Listener {
 
 	private void cancelEventTooHigh(CancellableTownyEvent event, Player player) {
 		event.setCancelMessage(Translatable.of("spawn_points9000_msg_err_you_cannot_set_this_spawn_point_above",
-				Settings.getSpawningLowestYLevelAllowed()).forLocale(player));
+				Settings.getSpawningHighestYLevelAllowed()).forLocale(player));
 		event.setCancelled(true);
 	}
 }
