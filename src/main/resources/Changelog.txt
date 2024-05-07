@@ -1,1 +1,5 @@
 1.0.0:
+  - Initial release.
+1.0.1:
+  - Fix missing `/t set homeblock` test that allowed players to set their spawn, bypassing the y level tests.
+  - Fix lowest and highest test values being swapped.

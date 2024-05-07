@@ -13,6 +13,7 @@ import org.bukkit.plugin.Plugin;
 import com.palmergames.bukkit.towny.event.CancellableTownyEvent;
 import com.palmergames.bukkit.towny.event.TranslationLoadEvent;
 import com.palmergames.bukkit.towny.event.nation.NationSetSpawnEvent;
+import com.palmergames.bukkit.towny.event.town.TownPreSetHomeBlockEvent;
 import com.palmergames.bukkit.towny.event.town.TownSetOutpostSpawnEvent;
 import com.palmergames.bukkit.towny.event.town.TownSetSpawnEvent;
 import com.palmergames.bukkit.towny.object.Translatable;
@@ -38,6 +39,13 @@ public class TownyListener implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+	public void onTownSetHomeblock(TownPreSetHomeBlockEvent event) {
+		if (!Settings.isSpawnYLevelLimitingEnabled())
+			return;
+		testY(event, event.getPlayer(), event.getPlayer().getLocation().getY());
+	}
+
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onTownSetSpawn(TownSetSpawnEvent event) {
 		if (!Settings.isSpawnYLevelLimitingEnabled())
 			return;
@@ -59,9 +67,9 @@ public class TownyListener implements Listener {
 	}
 
 	private void testY(CancellableTownyEvent event, Player player, double y) {
-		if (y <= Settings.getSpawningHighestYLevelAllowed())
+		if (y <= Settings.getSpawningLowestYLevelAllowed())
 			cancelEventTooLow(event, player);
-		else if (y >= Settings.getSpawningLowestYLevelAllowed())
+		else if (y >= Settings.getSpawningHighestYLevelAllowed())
 			cancelEventTooHigh(event, player);
 	}
 
