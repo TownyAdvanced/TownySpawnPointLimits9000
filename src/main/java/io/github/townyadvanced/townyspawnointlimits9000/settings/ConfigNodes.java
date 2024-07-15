@@ -25,8 +25,7 @@ public enum ConfigNodes {
 	BIOMES_BAD_BIOMES("biomes.bad_biomes",
 			"",
 			"",
-			"# A comma separated list of biomes that spawns cannot be set in. ie: the_end,end_barrens,end_highlands,end_midlands,small_end_islands",
-			"# When the percentage of this bad biome is over the threshold set in the towny config's claiming.biome_rules.unwanted_biomes.threshold value the spawn point will be blocked.");
+			"# A comma separated list of biomes that spawns cannot be set in. ie: the_end,end_barrens,end_highlands,end_midlands,small_end_islands");
 	
 	private final String Root;
 	private final String Default;

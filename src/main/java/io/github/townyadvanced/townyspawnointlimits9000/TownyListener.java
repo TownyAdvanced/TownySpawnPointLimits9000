@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Predicate;
 
+import org.bukkit.Location;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,7 +15,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
-import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.event.CancellableTownyEvent;
 import com.palmergames.bukkit.towny.event.TranslationLoadEvent;
 import com.palmergames.bukkit.towny.event.nation.NationSetSpawnEvent;
@@ -23,9 +23,6 @@ import com.palmergames.bukkit.towny.event.town.TownSetOutpostSpawnEvent;
 import com.palmergames.bukkit.towny.event.town.TownSetSpawnEvent;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.TranslationLoader;
-import com.palmergames.bukkit.towny.object.WorldCoord;
-import com.palmergames.bukkit.util.BiomeUtil;
-
 import io.github.townyadvanced.townyspawnointlimits9000.settings.Settings;
 
 public class TownyListener implements Listener {
@@ -50,7 +47,7 @@ public class TownyListener implements Listener {
 		if (!Settings.isSpawnYLevelLimitingEnabled())
 			return;
 		testY(event, event.getPlayer(), event.getPlayer().getLocation().getY());
-		if (isBadBiome(WorldCoord.parseWorldCoord(event.getPlayer().getLocation())))
+		if (isBadBiome(event.getPlayer().getLocation()))
 			cancelForBiome(event, event.getPlayer());
 	}
 
@@ -59,7 +56,7 @@ public class TownyListener implements Listener {
 		if (!Settings.isSpawnYLevelLimitingEnabled())
 			return;
 		testY(event, event.getPlayer(), event.getNewSpawn().getY());
-		if (isBadBiome(WorldCoord.parseWorldCoord(event.getNewSpawn())))
+		if (isBadBiome(event.getNewSpawn()))
 			cancelForBiome(event, event.getPlayer());
 	}
 
@@ -68,7 +65,7 @@ public class TownyListener implements Listener {
 		if (!Settings.isSpawnYLevelLimitingEnabled())
 			return;
 		testY(event, event.getPlayer(), event.getNewSpawn().getY());
-		if (isBadBiome(WorldCoord.parseWorldCoord(event.getNewSpawn())))
+		if (isBadBiome(event.getNewSpawn()))
 			cancelForBiome(event, event.getPlayer());
 	}
 
@@ -77,7 +74,7 @@ public class TownyListener implements Listener {
 		if (!Settings.isSpawnYLevelLimitingEnabled())
 			return;
 		testY(event, event.getPlayer(), event.getNewSpawn().getY());
-		if (isBadBiome(WorldCoord.parseWorldCoord(event.getNewSpawn())))
+		if (isBadBiome(event.getNewSpawn()))
 			cancelForBiome(event, event.getPlayer());
 	}
 
@@ -100,12 +97,12 @@ public class TownyListener implements Listener {
 		event.setCancelled(true);
 	}
 	
-	private boolean isBadBiome(WorldCoord wc) {
+	private boolean isBadBiome(Location loc) {
 		if (Settings.getUnwantedBiomeNames().isEmpty())
 			return false;
 
 		Predicate<Biome> isUnwantedBiomePredicate = (biome) -> Settings.getUnwantedBiomeNames().contains(biome.name().toLowerCase(Locale.ROOT));
-		return BiomeUtil.getWorldCoordBadBiomePercent(wc, isUnwantedBiomePredicate) >= TownySettings.getUnwantedBiomeThreshold();
+		return isUnwantedBiomePredicate.test(loc.getBlock().getBiome());
 	}
 
 	private void cancelForBiome(CancellableTownyEvent event, @NotNull Player player) {
