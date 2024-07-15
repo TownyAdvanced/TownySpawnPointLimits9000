@@ -1,6 +1,9 @@
 package io.github.townyadvanced.townyspawnointlimits9000.settings;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import com.palmergames.bukkit.config.CommentedConfiguration;
 import com.palmergames.bukkit.towny.exceptions.initialization.TownyInitException;
@@ -110,6 +113,17 @@ public class Settings {
 		return config.getString(node.getRoot().toLowerCase(), node.getDefault());
 	}
 
+	public static List<String> getStrArr(ConfigNodes node) {
+
+		String[] strArray = getString(node.getRoot().toLowerCase(Locale.ROOT), node.getDefault()).split(",");
+		List<String> list = new ArrayList<>();
+		
+		for (String string : strArray)
+			if (string != null && !string.isEmpty())
+				list.add(string.trim());
+		
+		return list;
+	}
 
 	public static boolean isSpawnYLevelLimitingEnabled() {
 		return getBoolean(ConfigNodes.SPAWNING_Y_LIMITS_ENABLED);
@@ -121,5 +135,9 @@ public class Settings {
 
 	public static double getSpawningHighestYLevelAllowed() {
 		return getDouble(ConfigNodes.SPAWNING_Y_LIMITS_HIGHEST_Y_ALLOWED);
+	}
+	
+	public static List<String> getUnwantedBiomeNames() {
+		return getStrArr(ConfigNodes.BIOMES_BAD_BIOMES);
 	}
 }

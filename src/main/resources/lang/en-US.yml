@@ -26,3 +26,4 @@ description: >
 
 spawn_points9000_msg_err_you_cannot_set_this_spawn_point_below: "You cannot set this spawn point below y level %s."
 spawn_points9000_msg_err_you_cannot_set_this_spawn_point_above: "You cannot set this spawn point above y level %s."
+spawn_points9000_msg_err_you_cannot_set_spawn_in_this_biome: "You cannot set this spawn point in this biome."

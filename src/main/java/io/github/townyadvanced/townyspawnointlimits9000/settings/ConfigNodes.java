@@ -20,7 +20,13 @@ public enum ConfigNodes {
 	SPAWNING_Y_LIMITS_HIGHEST_Y_ALLOWED("spawning.y_limits.highest_y_allowed",
 			"100",
 			"",
-			"# When limiting is configured, what is the highest y level allowed?");
+			"# When limiting is configured, what is the highest y level allowed?"),
+	BIOMES_ROOT("biomes","",""),
+	BIOMES_BAD_BIOMES("biomes.bad_biomes",
+			"",
+			"",
+			"# A comma separated list of biomes that spawns cannot be set in. ie: the_end,end_barrens,end_highlands,end_midlands,small_end_islands",
+			"# When the percentage of this bad biome is over the threshold set in the towny config's claiming.biome_rules.unwanted_biomes.threshold value the spawn point will be blocked.");
 	
 	private final String Root;
 	private final String Default;
