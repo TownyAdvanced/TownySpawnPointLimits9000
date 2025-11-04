@@ -16,6 +16,7 @@ import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 import com.palmergames.bukkit.towny.event.CancellableTownyEvent;
+import com.palmergames.bukkit.towny.event.PreNewTownEvent;
 import com.palmergames.bukkit.towny.event.TranslationLoadEvent;
 import com.palmergames.bukkit.towny.event.nation.NationSetSpawnEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreSetHomeBlockEvent;
@@ -78,11 +79,22 @@ public class TownyListener implements Listener {
 			cancelForBiome(event, event.getPlayer());
 	}
 
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+	public void onTownCreation(PreNewTownEvent event) {
+		if (!Settings.isSpawnYLevelLimitingEnabled())
+			return;
+		testY(event, event.getPlayer(), event.getTownLocation().getY());
+		if (isBadBiome(event.getTownLocation()))
+			cancelForBiome(event, event.getPlayer());
+	}
+
 	private void testY(CancellableTownyEvent event, Player player, double y) {
 		if (y <= Settings.getSpawningLowestYLevelAllowed())
 			cancelEventTooLow(event, player);
 		else if (y >= Settings.getSpawningHighestYLevelAllowed())
 			cancelEventTooHigh(event, player);
+		else if (player.getWorld().getHighestBlockYAt(player.getLocation()) > y)
+			cancelEventNoAirAbove(event, player);
 	}
 
 	private void cancelEventTooLow(CancellableTownyEvent event, Player player) {
@@ -96,7 +108,12 @@ public class TownyListener implements Listener {
 				Settings.getSpawningHighestYLevelAllowed()).forLocale(player));
 		event.setCancelled(true);
 	}
-	
+
+	private void cancelEventNoAirAbove(CancellableTownyEvent event, Player player) {
+		event.setCancelMessage(Translatable.of("spawn_points9000_msg_err_you_cannot_set_this_spawn_point_because_air").forLocale(player));
+		event.setCancelled(true);
+	}
+
 	private boolean isBadBiome(Location loc) {
 		if (Settings.getUnwantedBiomeNames().isEmpty())
 			return false;
