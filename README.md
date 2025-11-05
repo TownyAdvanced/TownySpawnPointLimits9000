@@ -1,11 +1,14 @@
 This plugin stops players setting their spawn points outside of a configurable window of valid Y levels.
 
 This includes: 
+- town creation,
 - town spawn points,
 - town outpost spawn points, and 
 - nation spawn points.
 
 They will be denied when setting their spawn too low or too high.
+
+It also has the option to prevent setting spawn points in certain biomes.
 
 ## Installation:
 
